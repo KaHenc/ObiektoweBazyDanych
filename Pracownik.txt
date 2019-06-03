@@ -1,0 +1,35 @@
+Class zad01.Pracownik [ Abstract ]
+{
+
+Property imie As %String [ Required ];
+
+Property nazwisko As %String [ Required ];
+
+Property ulica As %String [ Required ];
+
+Property numerDomu As %Integer [ Required ];
+
+Property miasto As %String [ Required ];
+
+Property stawkaGodzinowa As %Float [ Required ];
+
+Property bonus As %Float [ Required ];
+
+Method %OnNew(imie As %String, nazwisko As %String, ulica As %String, numerDomu As %Integer, miasto As %String, stawka As %Float, bonus As %Float) As %Status [ Private, ServerOnly = 1 ]
+{
+    set ..imie = imie
+    set ..nazwisko = nazwisko
+    set ..ulica = ulica
+    set ..numerDomu = numerDomu
+    set ..miasto = miasto
+    set ..stawkaGodzinowa = stawka
+    set ..bonus = bonus
+      Quit $$$OK
+}
+
+Method wynagrodzenie() As %Float
+{
+	return 100 * ..stawkaGodzinowa
+}
+
+}

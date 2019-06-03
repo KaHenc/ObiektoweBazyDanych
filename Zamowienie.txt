@@ -1,0 +1,84 @@
+Class zad01.Zamowienie Extends (%Persistent, %Populate, %XML.Adaptor, %ZEN.DataModel.Adaptor)
+{
+
+Property bonus As Promocja [ Required ];
+
+Relationship dostawcaZamowienia As zad01.Dostawca [ Cardinality = one, Inverse = zamowieniaDostawcy ];
+
+Relationship uslugiZamowienia As zad01.Usluga [ Cardinality = many, Inverse = zamowienie ];
+
+Index DostawcaIndex On dostawcaZamowienia;
+
+Method %OnNew(dostawca As Dostawca, usluga As Usluga, bonus As Promocja) As %Status [ Private, ServerOnly = 1 ]
+{
+    set ..bonus = bonus
+    set ..dostawcaZamowienia = dostawca
+    set ..uslugiZamowienia = usluga
+}
+
+Method pokazWartoscZamowienia(zamowienie As Zamowienie)
+{
+	Set klucz = ""
+	Set wartoscZamowienia = 0
+	
+	Do {
+    	Set usluga = zamowienie.uslugiZamowienia.GetNext(.klucz)
+    	If (usluga '= "") {
+        	Set wartoscZamowienia = wartoscZamowienia + usluga.cena
+    	}
+ 	} While (usluga '= "")
+ 	
+ 	write !,"Wartosc zamowienia: ", wartoscZamowienia
+}
+
+Method pokazCzasOczekiwania(zamowienie As Zamowienie)
+{
+	Set klucz = ""
+	Set czasWykonania = 0
+	
+	Do {
+    	Set usluga = zamowienie.uslugiZamowienia.GetNext(.klucz)
+    	If (usluga '= "") {
+        	Set czasWykonania = czasWykonania + usluga.czasWykonania
+    	}
+ 	} While (usluga '= "")
+ 	
+ 	write !,"Czas wykonania zamowienia: ", czasWykonania
+}
+
+Method zmienPromocje(bonus As Promocja)
+{
+	set ..bonus = bonus
+}
+
+Storage Default
+{
+<Data name="ZamowienieDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>Bonus</Value>
+</Value>
+<Value name="3">
+<Value>Dostawca</Value>
+</Value>
+<Value name="4">
+<Value>Usluga</Value>
+</Value>
+<Value name="5">
+<Value>bonus</Value>
+</Value>
+<Value name="6">
+<Value>dostawcaZamowienia</Value>
+</Value>
+</Data>
+<DataLocation>^zad01.ZamowienieD</DataLocation>
+<DefaultData>ZamowienieDefaultData</DefaultData>
+<IdLocation>^zad01.ZamowienieD</IdLocation>
+<IndexLocation>^zad01.ZamowienieI</IndexLocation>
+<StreamLocation>^zad01.ZamowienieS</StreamLocation>
+<Type>%Library.CacheStorage</Type>
+}
+
+}

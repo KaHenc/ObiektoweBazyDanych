@@ -1,0 +1,64 @@
+Class zad01.Usluga Extends (%Persistent, %Populate, %XML.Adaptor, %ZEN.DataModel.Adaptor)
+{
+
+Property cena As %Float [ Required ];
+
+Property nazwa As %String [ Required ];
+
+Property czasWykonania As %Integer [ Required ];
+
+Relationship zamowienie As zad01.Zamowienie [ Cardinality = one, Inverse = uslugiZamowienia ];
+
+Method %OnNew(cena As %Float, nazwa As %String, czasWykonania As %Integer) As %Status [ Private, ServerOnly = 1 ]
+{
+    set ..cena = cena
+    set ..nazwa = nazwa
+    set ..czasWykonania = czasWykonania
+      Quit $$$OK
+}
+
+Method zmienCene(cena As %Float)
+{
+	set ..cena = cena
+}
+
+Storage Default
+{
+<Data name="UslugaDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>Cena</Value>
+</Value>
+<Value name="3">
+<Value>Nazwa</Value>
+</Value>
+<Value name="4">
+<Value>CzasWykonania</Value>
+</Value>
+<Value name="5">
+<Value>Zamowienie</Value>
+</Value>
+<Value name="6">
+<Value>cena</Value>
+</Value>
+<Value name="7">
+<Value>nazwa</Value>
+</Value>
+<Value name="8">
+<Value>czasWykonania</Value>
+</Value>
+<Value name="9">
+<Value>zamowienie</Value>
+</Value>
+</Data>
+<DataLocation>^zad01.UslugaD</DataLocation>
+<DefaultData>UslugaDefaultData</DefaultData>
+<IdLocation>^zad01.UslugaD</IdLocation>
+<IndexLocation>^zad01.UslugaI</IndexLocation>
+<StreamLocation>^zad01.UslugaS</StreamLocation>
+<Type>%Library.CacheStorage</Type>
+}
+
+}

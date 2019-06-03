@@ -1,0 +1,33 @@
+Class zad01.Stanowisko Extends (%Persistent, %Populate, %XML.Adaptor, %ZEN.DataModel.Adaptor)
+{
+
+Property numer As %Integer [ Required ];
+
+Relationship Mechanik As zad01.Mechanik [ Cardinality = one, Inverse = Stanowiska ];
+
+Relationship Rezerwacje As zad01.Rezerwacja [ Cardinality = children, Inverse = Stanowisko ];
+
+Index MechanikIndex On Mechanik;
+
+Storage Default
+{
+<Data name="StanowiskoDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>numer</Value>
+</Value>
+<Value name="3">
+<Value>Mechanik</Value>
+</Value>
+</Data>
+<DataLocation>^zad01.StanowiskoD</DataLocation>
+<DefaultData>StanowiskoDefaultData</DefaultData>
+<IdLocation>^zad01.StanowiskoD</IdLocation>
+<IndexLocation>^zad01.StanowiskoI</IndexLocation>
+<StreamLocation>^zad01.StanowiskoS</StreamLocation>
+<Type>%Library.CacheStorage</Type>
+}
+
+}

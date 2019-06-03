@@ -1,0 +1,71 @@
+Class zad01.Dostawca Extends (%Persistent, %Populate, %XML.Adaptor, %ZEN.DataModel.Adaptor, zad01.Pracownik)
+{
+
+Relationship zamowieniaDostawcy As zad01.Zamowienie [ Cardinality = many, Inverse = dostawcaZamowienia ];
+
+ClassMethod pokazZamowienia(dostawca As Dostawca)
+{
+	Set klucz = ""
+	Do {
+    	Set zamowienie = dostawca.zamowieniaDostawcy.GetNext(.klucz)
+    	If (zamowienie '= "") {
+        	Write "Numer zamowienia: ", zamowienie.%Id(), " Usluga: ", zamowienie.Usluga.Nazwa,!
+    	}
+ 	} While (klucz '= "")
+}
+
+Storage Default
+{
+<Data name="DostawcaDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>Imie</Value>
+</Value>
+<Value name="3">
+<Value>Nazwisko</Value>
+</Value>
+<Value name="4">
+<Value>Ulica</Value>
+</Value>
+<Value name="5">
+<Value>NumerDomu</Value>
+</Value>
+<Value name="6">
+<Value>Miasto</Value>
+</Value>
+<Value name="7">
+<Value>StawkaGodzinowa</Value>
+</Value>
+<Value name="8">
+<Value>bonus</Value>
+</Value>
+<Value name="9">
+<Value>imie</Value>
+</Value>
+<Value name="10">
+<Value>nazwisko</Value>
+</Value>
+<Value name="11">
+<Value>ulica</Value>
+</Value>
+<Value name="12">
+<Value>numerDomu</Value>
+</Value>
+<Value name="13">
+<Value>miasto</Value>
+</Value>
+<Value name="14">
+<Value>stawkaGodzinowa</Value>
+</Value>
+</Data>
+<DataLocation>^zad01.DostawcaD</DataLocation>
+<DefaultData>DostawcaDefaultData</DefaultData>
+<IdLocation>^zad01.DostawcaD</IdLocation>
+<IndexLocation>^zad01.DostawcaI</IndexLocation>
+<StreamLocation>^zad01.DostawcaS</StreamLocation>
+<Type>%Library.CacheStorage</Type>
+}
+
+}
